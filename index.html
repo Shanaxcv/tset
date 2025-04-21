@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program Hitung Luas Bangun Dasar (Java)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .instruction {
+            background-color: #e7f4ff;
+            padding: 15px;
+            border-left: 5px solid #4CAF50;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Program Hitung Luas Bangun Dasar</h1>
+    
+    <h2>Deskripsi Program</h2>
+    <p>Program Java ini menghitung luas 5 bangun datar:</p>
+    <ul>
+        <li>Persegi</li>
+        <li>Persegi Panjang</li>
+        <li>Segitiga</li>
+        <li>Lingkaran</li>
+        <li>Trapesium</li>
+    </ul>
+
+    <div class="instruction">
+        <h2>Cara Menjalankan Program</h2>
+        <ol>
+            <li><strong>Clone repository:</strong><br>
+                <code>git clone https://github.com/username/repo-name.git</code>
+            </li>
+            <li><strong>Compile kode Java:</strong><br>
+                <code>javac src/Main.java</code>
+            </li>
+            <li><strong>Jalankan program:</strong><br>
+                <code>java -cp src Main</code>
+            </li>
+        </ol>
+    </div>
+
+    <h2>Kode Sumber</h2>
+    <pre><code id="java-code"></code></pre>
+
+    <script>
+        // Menampilkan kode Java dari file eksternal (opsional)
+        fetch('src/Main.java')
+            .then(response => response.text())
+            .then(code => {
+                document.getElementById('java-code').textContent = code;
+            })
+            .catch(error => {
+                document.getElementById('java-code').textContent = 
+                    "// Error: File kode tidak ditemukan\n// Pastikan file src/Main.java ada di repository";
+            });
+    </script>
+</body>
+</html>
