@@ -1,71 +1,135 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Program Hitung Luas Bangun Dasar (Java)</title>
+    <title>Kalkulator Luas Bangun Dasar</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            line-height: 1.6;
         }
-        pre {
-            background-color: #f4f4f4;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
+        .calculator {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .instruction {
-            background-color: #e7f4ff;
-            padding: 15px;
-            border-left: 5px solid #4CAF50;
-            margin: 20px 0;
+        select, input, button {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e9f7ef;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <h1>Program Hitung Luas Bangun Dasar</h1>
+    <h1>Kalkulator Luas Bangun Dasar</h1>
     
-    <h2>Deskripsi Program</h2>
-    <p>Program Java ini menghitung luas 5 bangun datar:</p>
-    <ul>
-        <li>Persegi</li>
-        <li>Persegi Panjang</li>
-        <li>Segitiga</li>
-        <li>Lingkaran</li>
-        <li>Trapesium</li>
-    </ul>
-
-    <div class="instruction">
-        <h2>Cara Menjalankan Program</h2>
-        <ol>
-            <li><strong>Clone repository:</strong><br>
-                <code>git clone https://github.com/username/repo-name.git</code>
-            </li>
-            <li><strong>Compile kode Java:</strong><br>
-                <code>javac src/Main.java</code>
-            </li>
-            <li><strong>Jalankan program:</strong><br>
-                <code>java -cp src Main</code>
-            </li>
-        </ol>
+    <div class="calculator">
+        <select id="shape">
+            <option value="square">Persegi</option>
+            <option value="rectangle">Persegi Panjang</option>
+            <option value="triangle">Segitiga</option>
+            <option value="circle">Lingkaran</option>
+            <option value="trapezoid">Trapesium</option>
+        </select>
+        
+        <div id="inputs">
+            <!-- Input fields akan diisi secara dinamis -->
+        </div>
+        
+        <button onclick="calculateArea()">Hitung Luas</button>
+        
+        <div id="result"></div>
     </div>
 
-    <h2>Kode Sumber</h2>
-    <pre><code id="java-code"></code></pre>
-
     <script>
-        // Menampilkan kode Java dari file eksternal (opsional)
-        fetch('src/Main.java')
-            .then(response => response.text())
-            .then(code => {
-                document.getElementById('java-code').textContent = code;
-            })
-            .catch(error => {
-                document.getElementById('java-code').textContent = 
-                    "// Error: File kode tidak ditemukan\n// Pastikan file src/Main.java ada di repository";
-            });
+        // Fungsi untuk mengupdate input fields berdasarkan pilihan bangun
+        document.getElementById('shape').addEventListener('change', function() {
+            const shape = this.value;
+            let html = '';
+            
+            switch(shape) {
+                case 'square':
+                    html = '<label>Sisi:</label><input type="number" id="side" step="any">';
+                    break;
+                case 'rectangle':
+                    html = '<label>Panjang:</label><input type="number" id="length" step="any">' +
+                           '<label>Lebar:</label><input type="number" id="width" step="any">';
+                    break;
+                case 'triangle':
+                    html = '<label>Alas:</label><input type="number" id="base" step="any">' +
+                           '<label>Tinggi:</label><input type="number" id="height" step="any">';
+                    break;
+                case 'circle':
+                    html = '<label>Jari-jari:</label><input type="number" id="radius" step="any">';
+                    break;
+                case 'trapezoid':
+                    html = '<label>Sisi sejajar 1:</label><input type="number" id="side1" step="any">' +
+                           '<label>Sisi sejajar 2:</label><input type="number" id="side2" step="any">' +
+                           '<label>Tinggi:</label><input type="number" id="t-height" step="any">';
+                    break;
+            }
+            
+            document.getElementById('inputs').innerHTML = html;
+        });
+
+        // Fungsi untuk menghitung luas
+        function calculateArea() {
+            const shape = document.getElementById('shape').value;
+            let area = 0;
+            let resultText = '';
+            
+            try {
+                switch(shape) {
+                    case 'square':
+                        const side = parseFloat(document.getElementById('side').value);
+                        area = side * side;
+                        resultText = `Luas Persegi dengan sisi ${side} = ${area.toFixed(2)}`;
+                        break;
+                    case 'rectangle':
+                        const length = parseFloat(document.getElementById('length').value);
+                        const width = parseFloat(document.getElementById('width').value);
+                        area = length * width;
+                        resultText = `Luas Persegi Panjang (${length} × ${width}) = ${area.toFixed(2)}`;
+                        break;
+                    case 'triangle':
+                        const base = parseFloat(document.getElementById('base').value);
+                        const height = parseFloat(document.getElementById('height').value);
+                        area = 0.5 * base * height;
+                        resultText = `Luas Segitiga (½ × ${base} × ${height}) = ${area.toFixed(2)}`;
+                        break;
+                    case 'circle':
+                        const radius = parseFloat(document.getElementById('radius').value);
+                        area = Math.PI * radius * radius;
+                        resultText = `Luas Lingkaran dengan jari-jari ${radius} = ${area.toFixed(2)}`;
+                        break;
+                    case 'trapezoid':
+                        const side1 = parseFloat(document.getElementById('side1').value);
+                        const side2 = parseFloat(document.getElementById('side2').value);
+                        const tHeight = parseFloat(document.getElementById('t-height').value);
+                        area = 0.5 * (side1 + side2) * tHeight;
+                        resultText = `Luas Trapesium (½ × (${side1} + ${side2}) × ${tHeight}) = ${area.toFixed(2)}`;
+                        break;
+                }
+                
+                document.getElementById('result').innerHTML = resultText;
+            } catch (e) {
+                document.getElementById('result').innerHTML = 'Error: Masukkan angka yang valid!';
+            }
+        }
     </script>
 </body>
 </html>
